@@ -1,0 +1,21 @@
+{% extends 'blogengine/base.html' %}
+
+{% block title_block %}
+{{ tag.tag_name }}
+{% endblock %}
+
+{% block page_info %}
+<h1 style="color: deepskyblue">#{{ tag.tag_name }}</h1><br>
+{% for post in tag.posts.all %}
+    <div class="card">
+        <div class="card-header">{{ post.date_pub }}</div>
+        <div class="card-body">
+            <h5 class="card-title text-info">{{ post.title|title }}</h5>
+            <p class="card-text">{{ post.body|truncatewords:15 }}</p>
+        </div>
+    </div> <br>
+{% endfor %}
+<a class="btn btn-outline-primary" href="{% url 'tags_list_url' %}" role="button">Other tags</a>
+<a class="btn btn-outline-warning" href="{{ tag.get_edit_url }}" role="button">Edit tag</a>
+<a class="btn btn-outline-danger" href="{{ tag.get_delete_url }}" role="button">Delete tag</a>
+{% endblock %}

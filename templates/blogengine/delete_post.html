@@ -1,0 +1,14 @@
+{% extends 'blogengine/base.html' %}
+
+{% block title_block %}
+Delete "{{ post.title }}" post
+{% endblock %}
+
+{% block page_info %}
+    <h1>Are you sure that you want to delete "{{ post.title }}" post?</h1>
+    <form action="{{ post.get_delete_url }}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a class="btn btn-outline-success" href="{{ post.get_absolute_url }}" role="button">Cancel</a>
+    </form>
+{% endblock %}

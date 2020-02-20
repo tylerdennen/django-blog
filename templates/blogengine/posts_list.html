@@ -1,0 +1,48 @@
+{% extends 'blogengine/base.html' %}
+
+{% block title_block %}
+Posts
+{% endblock %}
+
+{% block page_info %}
+<h1>All posts:</h1><br>
+    {% for post in posts %}
+        <div class="card">
+            <div class="card-header">{{ post.date_pub }}</div>
+            <div class="card-body">
+                <h5 class="card-title text-info">{{ post.title|title }}</h5>
+                <p class="card-text">{{ post.body|truncatewords:15 }}</p>
+                <p>{% for tag in post.tags.all %}
+                <a href="{{ tag.get_absolute_url }}">#{{ tag.tag_name }}</a>
+                    {% endfor %}</p>
+                <a class="btn btn-info" href="{{ post.get_absolute_url }}">Go to the post</a>
+            </div>
+        </div> <br>
+    {% endfor %}
+
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ prev_page_url }}">Previous</a>
+    </li>
+
+    {% for n in paginator.page_range %}
+      {% if n == current_page.number %}
+          <li class="page-item active" aria-current="page">
+          <span class="page-link">
+            {{ n }}
+            <span class="sr-only">(current)</span>
+          </span>
+          </li>
+      {% elif n < current_page.number|add:+3 and n > current_page.number|add:-3 %}
+            <li class="page-item"><a class="page-link" href="?page={{ n }}"> {{ n }} </a></li>
+      {% endif %}
+    {% endfor %}
+
+    <li class="page-item {% if not next_page_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ next_page_url }}">Next</a>
+    </li>
+  </ul>
+</nav>
+
+{% endblock %}

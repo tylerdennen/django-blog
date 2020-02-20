@@ -1,0 +1,44 @@
+{% extends 'blogengine/base.html' %}
+
+{% block title_block %}
+Tags
+{% endblock %}
+
+{% block page_info %}
+<h1>All tags:</h1>
+<ul class="list-group">
+    {% for tag in tags %}
+    <div class="card" style="margin: 10px;">
+    <li class="list-group-item list-group-item-info" style="color: black;">
+        <a href="{{ tag.get_absolute_url }}">#{{ tag.tag_name }}</a>
+    </li>
+    </div>
+    {% endfor %}
+</ul>
+
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ prev_page_url }}">Previous</a>
+    </li>
+
+    {% for n in paginator.page_range %}
+      {% if n == current_page.number %}
+          <li class="page-item active" aria-current="page">
+          <span class="page-link">
+            {{ n }}
+            <span class="sr-only">(current)</span>
+          </span>
+          </li>
+      {% elif n < current_page.number|add:+3 and n > current_page.number|add:-3 %}
+            <li class="page-item"><a class="page-link" href="?page={{ n }}"> {{ n }} </a></li>
+      {% endif %}
+    {% endfor %}
+
+    <li class="page-item {% if not next_page_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ next_page_url }}">Next</a>
+    </li>
+  </ul>
+</nav>
+
+{% endblock %}

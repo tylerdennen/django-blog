@@ -1,0 +1,10 @@
+{% extends 'blogengine/base.html' %}
+
+{% block title_block %}
+Сhanged {{ tag.tag_name }}
+{% endblock %}
+
+{% block page_info %}
+<h1>This slug is already exist. Slug has been changed to "{{ tag.slug }}"</h1><br><br>
+<a class="btn btn-info" href="{{ tag.get_absolute_url }}">Go to the tag page</a>
+{% endblock %}

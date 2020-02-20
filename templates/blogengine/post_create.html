@@ -1,0 +1,22 @@
+{% extends 'blogengine/base.html' %}
+
+{% block title_block %}
+Create new post
+{% endblock %}
+
+{% block page_info %}
+    <h1>Create new post</h1>
+    <form action="{% url 'post_create_url' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.errors %}
+            <div class="alert alert-danger" role="alert">{{ field.errors }}</div>
+            {% endif %}
+            <div class="form-group">
+            {{ field.label }}
+            {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Create new post</button>
+    </form>
+{% endblock %}
